@@ -1,1 +1,18 @@
-/home/anti-matter/stuff/comp/pro/scripts/reflector.sh
+#! /bin/bash
+
+if [ -f /etc/pacman.d/mirrorlist.pacnew ];then
+    sudo cp /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist.backup
+    echo "cp /etc/pacman.d/mirrorlist.pacnew /etc/pacman.d/mirrorlist.backup"
+    sudo mv /etc/pacman.d/mirrorlist.pacnew  /etc/pacman.d/mirrorlist
+    echo "mv /etc/pacman.d/mirrorlist.pacnew  /etc/pacman.d/mirrorlist"
+    echo
+    echo
+    sudo reflector --verbose --country 'United States' -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+
+else
+    echo "No pacnew file, generating new mirror list anyway"
+    echo 
+    echo
+    sudo reflector --verbose --country 'United States' -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
+
+fi    
